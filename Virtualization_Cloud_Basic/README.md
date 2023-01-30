@@ -103,6 +103,7 @@ icacls .\frankfurt.pem /grant:r "$($env:USERNAME):(R)"
 <img src="./docs/images/lambda_hello_world.png" />
 
 <em>Create a static website on Amazon S3</em>
+[EPAM Cloud&DevOps Fundamentals Autumn 2022](http://srg6rt-botnikov-1.s3-website.eu-central-1.amazonaws.com/)
 
 <img src="./docs/images/static_website.png" />
 
