@@ -1,3 +1,8 @@
+provider "aws" {
+  # Configure the AWS Provider
+  region = "eu-central-1"
+  }
+
 # 1. Create vpc
 resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
