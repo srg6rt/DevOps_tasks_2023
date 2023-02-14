@@ -1,0 +1,52 @@
+pipeline{
+    agent any
+    tools {
+        terraform 'terraform'
+    }
+    stages{
+        
+        stage('Git Checkoutt') {
+            steps{
+                git credentialsId: 'jenkins_example_private', url: 'https://github.com/srg6rt/DevOps_tasks_2023'
+                sh 'ls -la'
+                
+            }
+        }
+        
+
+        stage('Terraform Init') {
+            steps{
+                sh 'terraform init'
+            }
+        }
+        
+        stage('Terraform Plan') {
+            steps{
+                
+                withCredentials([
+                    aws(credentialsId: 'jenkins-test-user', 
+                    accessKeyVariable: 'AWS_ACCESS_KEY_ID', 
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+                sh 'terraform plan'
+                    }
+                
+            }
+        }
+        
+        stage('Terraform Apply') {
+            steps{
+                
+                withCredentials([
+                    aws(credentialsId: 'jenkins-test-user', 
+                    accessKeyVariable: 'AWS_ACCESS_KEY_ID', 
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+                sh 'terraform apply --auto-approve'
+                    }
+                
+            }
+        }
+        
+
+    }
+    
+}

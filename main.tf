@@ -135,7 +135,7 @@ resource "aws_instance" "web-server-instance" {
             sudo bash -c 'echo "Test web page" > /var/www/html/index.html'
             EOF
     tags = {
-         Name = "Web Server"
+         Name = "Web Server 1"
      }
 }
 
