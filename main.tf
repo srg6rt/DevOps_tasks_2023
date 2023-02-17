@@ -1,7 +1,7 @@
 provider "aws" {
   # Configure the AWS Provider
   region = "eu-central-1"
-
+  
 }
 
 
@@ -143,9 +143,23 @@ resource "aws_instance" "web-server-instance" {
          Name = "Web Server"
      }
 
+    provisioner "remote-exec" {  
+    inline = [  
+    "echo 'Waiting for user data script to finish'",  
+    "cloud-init status --wait > /dev/null"  
+    ]  
+    connection {
+      type            = "ssh"
+      user            = "admin"
+      private_key     = file("/var/lib/jenkins/frankfut-eu-central-1.pem")
+      host            = aws_instance.web-server-instance.public_ip
+
+   }
+    }
+
     provisioner "file" {
       source      = "/var/lib/jenkins/workspace/terraform_git/AWS_projecto/index.html"
-      destination = "/var/www/html/index.html"
+      destination = "/tmp/index.html"
 
 
     connection {
@@ -153,6 +167,7 @@ resource "aws_instance" "web-server-instance" {
       user            = "admin"
       private_key     = file("/var/lib/jenkins/frankfut-eu-central-1.pem")
       host            = aws_instance.web-server-instance.public_ip
+
    }
 }
 }
