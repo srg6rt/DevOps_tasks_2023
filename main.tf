@@ -1,7 +1,9 @@
 provider "aws" {
   # Configure the AWS Provider
   region = "eu-central-1"
-  }
+
+}
+
 
 # 1. Create vpc
 resource "aws_vpc" "main" {
@@ -118,7 +120,7 @@ resource "aws_eip" "one" {
 
 # 9. Create Ubuntu server and install/enable apache2
 resource "aws_instance" "web-server-instance" {
-    ami = "ami-06c39ed6b42908a36"
+    ami = "ami-08f13e5792295e1b2"
     instance_type = "t2.micro"
     availability_zone = "eu-central-1a"
     key_name = "frankfut-eu-central-1"
@@ -127,18 +129,33 @@ resource "aws_instance" "web-server-instance" {
       device_index = 0
       network_interface_id = aws_network_interface.web-server-nic.id
     }
+
+
     user_data = <<-EOF
             #!/bin/bash
-            sudo yum update -y
-            sudo yum install apache2 -y
+            sudo apt update -y
+            sudo apt install apache2 -y
             sudo systemctl start apache2
             sudo bash -c 'echo "Test web page" > /var/www/html/index.html'
+            
             EOF
     tags = {
-         Name = "Web Server 1"
+         Name = "Web Server"
      }
 }
 
+provisioner "file" {
+  source      = "/var/lib/jenkins/workspace/terraform_git/AWS_projecto/index.html"
+  destination = "/var/www/html/index.html"
+
+
+    connection {
+      type            = "ssh"
+      user            = "admin"
+      private_key     = file("/home/sergio/Downloads/frankfut-eu-central-1.pem")
+      host            = aws_eip.one.public_ip
+   }
+}
 
 output "server_public_ip" {
     value = aws_eip.one.public_ip
