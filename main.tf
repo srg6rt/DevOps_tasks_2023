@@ -151,7 +151,7 @@ resource "aws_instance" "web-server-instance" {
     connection {
       type            = "ssh"
       user            = "admin"
-      private_key     = file("/home/sergio/Downloads/frankfut-eu-central-1.pem")
+      private_key     = file("/var/lib/jenkins/frankfut-eu-central-1.pem")
       host            = aws_instance.web-server-instance.public_ip
    }
 }
