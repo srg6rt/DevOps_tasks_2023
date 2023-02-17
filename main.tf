@@ -142,20 +142,22 @@ resource "aws_instance" "web-server-instance" {
     tags = {
          Name = "Web Server"
      }
-}
 
-provisioner "file" {
-  source      = "/var/lib/jenkins/workspace/terraform_git/AWS_projecto/index.html"
-  destination = "/var/www/html/index.html"
+    provisioner "file" {
+      source      = "/var/lib/jenkins/workspace/terraform_git/AWS_projecto/index.html"
+      destination = "/var/www/html/index.html"
 
 
     connection {
       type            = "ssh"
       user            = "admin"
       private_key     = file("/home/sergio/Downloads/frankfut-eu-central-1.pem")
-      host            = aws_eip.one.public_ip
+      host            = aws_instance.web-server-instance.public_ip
    }
 }
+}
+
+
 
 output "server_public_ip" {
     value = aws_eip.one.public_ip
