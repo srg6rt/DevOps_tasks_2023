@@ -134,8 +134,12 @@ resource "aws_instance" "web-server-instance" {
             #!/bin/bash
             sudo apt update -y
             sudo apt install apache2 -y
+            sudo apt install apache2-dev -y
+            sudo apt install python3-venv -y
             sudo apt install pip -y
+
             sudo systemctl start apache2
+
             sudo bash -c 'echo "Test web page" > /var/www/html/index.html'
             
             EOF
@@ -163,8 +167,10 @@ resource "aws_instance" "web-server-instance" {
   }
 
   provisioner "remote-exec" {
-     inline = [ "echo 'copy index file'",
-                "sudo cp /tmp/AWS_projecto/index.html /var/www/html/index.html" ]
+     inline = [ "echo 'copy Django project'",
+                "sudo chmod 777 -R /tmp/AWS_projecto/*.*",
+                "sudo cp -R /tmp/AWS_projecto/*.* /var/www/html/", 
+                "sudo pip install -r requirements.txt" ]
     # on_failure = continue
 
   }
