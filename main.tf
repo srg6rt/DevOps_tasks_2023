@@ -157,14 +157,14 @@ resource "aws_instance" "web-server-instance" {
   }
 
   provisioner "file" {
-    source      = "/var/lib/jenkins/workspace/terraform_git/AWS_projecto/index.html"
-    destination = "/tmp/index.html"
+      source      = "/var/lib/jenkins/workspace/terraform_git/AWS_projecto/*"
+      destination = "/tmp/AWS_projecto"
 
   }
 
   provisioner "remote-exec" {
-    inline = ["echo 'copy index file'",
-    "sudo cp /tmp/index.html /var/www/html/index.html"]
+     inline = [ "echo 'copy index file'",
+                "sudo cp /tmp/AWS_projecto/index.html /var/www/html/index.html" ]
     # on_failure = continue
 
   }
