@@ -169,8 +169,8 @@ resource "aws_instance" "web-server-instance" {
 
   provisioner "remote-exec" {
      inline = [ "echo 'copy Django project'",
-                "sudo chmod 777 -R /tmp/AWS_projecto/*.*",
-                "sudo cp -R /tmp/AWS_projecto/*.* /var/www/html/", 
+                "sudo cp -R /tmp/AWS_projecto/* /var/www/html", 
+                "echo 'Install requirements'",
                 "sudo pip install -r /var/www/html/requirements.txt",
                 "cd /var/www/html/",
                 "sudo cp apache2.conf /etc/apache2/apache2.conf",
