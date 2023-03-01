@@ -1,0 +1,59 @@
+{% extends "frontpage/base.html" %}
+
+
+
+{% block content %}
+
+
+<h2>Comments</h2>
+
+<br>
+ 
+<h4>{{ compare_youtube_url }}</h4>
+
+<br>
+
+    <ul>
+        {% for comments in object_list %}
+
+        {% if comments.youtube_url == compare_youtube_url %}
+  
+        <li>
+        <table class="tg">
+            <thead>
+              <tr>
+                <td"><strong>{{ comments.nickname }}</strong></td>
+                <td">{{ comments.date_published_comment }}</td>
+                <td class="tg-0lax">{{ comments.comment }}</td>
+              </tr>
+            </thead>
+            </table>
+        </li>
+        <br>
+
+        {% endif %}
+
+        {% endfor %}
+    </ul>
+ 
+ 
+ 
+
+
+
+
+
+{% endblock content %}
+
+ 
+
+ 
+
+ 
+
+ 
+ 
+
+
+ 
+ 

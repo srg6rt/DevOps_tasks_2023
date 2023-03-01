@@ -135,7 +135,8 @@ resource "aws_instance" "web-server-instance" {
             sudo apt update -y
             sudo apt install apache2 -y
             sudo apt install apache2-dev -y
-            sudo apt install python3-venv -y
+            sudo apt install libapache2-mod-wsgi-py3 -y
+            sudo apt install python3-venv libexpat1 -y
             sudo apt install pip -y
 
             sudo systemctl start apache2
@@ -170,7 +171,13 @@ resource "aws_instance" "web-server-instance" {
      inline = [ "echo 'copy Django project'",
                 "sudo chmod 777 -R /tmp/AWS_projecto/*.*",
                 "sudo cp -R /tmp/AWS_projecto/*.* /var/www/html/", 
-                "sudo pip install -r requirements.txt" ]
+                "sudo pip install -r /var/www/html/requirements.txt",
+                "cd /var/www/html/",
+                "sudo cp apache2.conf /etc/apache2/apache2.conf",
+                "sudo cp ennvars /etc/apache2/ennvars",
+                "sudo chmod 664 /var/www/html/aussichtsturm/db.sqlite3",
+                "sudo chown :www-data /var/www/html/aussichtsturm/db.sqlite3",
+                "sudo systemctl restart apache2"]
     # on_failure = continue
 
   }
