@@ -168,7 +168,12 @@ resource "aws_instance" "web-server-instance" {
   }
 
   provisioner "remote-exec" {
-     inline = [ "echo 'copy Django project'",
+     inline = [ 
+                "cd /var/www/html/",
+                "sudo django-admin startproject aussichtsturm",
+                "cd /var/www/html/aussichtsturm/",
+                "python manage.py startapp youtube_comments_grabber",
+                "echo 'copy Django project'",
                 "sudo cp -R /tmp/AWS_projecto/* /var/www/html", 
                 "echo 'Install requirements'",
                 "sudo pip install -r /var/www/html/requirements.txt",
@@ -177,7 +182,8 @@ resource "aws_instance" "web-server-instance" {
                 "sudo cp ennvars /etc/apache2/ennvars",
                 "sudo chmod 664 /var/www/html/aussichtsturm/db.sqlite3",
                 "sudo chown :www-data /var/www/html/aussichtsturm/db.sqlite3",
-                "sudo systemctl restart apache2"]
+                "sudo systemctl restart apache2"
+                ]
     # on_failure = continue
 
   }
