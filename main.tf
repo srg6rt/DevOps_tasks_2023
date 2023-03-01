@@ -18,8 +18,7 @@ resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.main.id
 }
 
-# 3.0 Create Custom Route Table
-
+# 3. Create Custom Route Table
 resource "aws_route_table" "prod-route-table" {
   vpc_id = aws_vpc.main.id
 
@@ -38,7 +37,7 @@ resource "aws_route_table" "prod-route-table" {
   }
 }
 
-# 3. Create a Subnet
+# 4. Create a Subnet
 resource "aws_subnet" "subnet_1" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.1.0/24"
@@ -50,7 +49,7 @@ resource "aws_subnet" "subnet_1" {
 
 }
 
-# 4. Associate subnet with Route Table
+# 5. Associate subnet with Route Table
 resource "aws_route_table_association" "a" {
   subnet_id      = aws_subnet.subnet_1.id
   route_table_id = aws_route_table.prod-route-table.id
@@ -99,7 +98,7 @@ resource "aws_security_group" "allow_web" {
   }
 }
 
-# 7.  Create  a network interface with an ip in the subnet that was created in step 4
+# 7. Create  a network interface with an ip in the subnet that was created in step 4
 resource "aws_network_interface" "web-server-nic" {
   subnet_id       = aws_subnet.subnet_1.id
   private_ips     = ["10.0.1.50"]
@@ -135,6 +134,7 @@ resource "aws_instance" "web-server-instance" {
             #!/bin/bash
             sudo apt update -y
             sudo apt install apache2 -y
+            sudo apt install pip -y
             sudo systemctl start apache2
             sudo bash -c 'echo "Test web page" > /var/www/html/index.html'
             
