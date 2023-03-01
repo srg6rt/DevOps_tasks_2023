@@ -157,8 +157,8 @@ resource "aws_instance" "web-server-instance" {
   }
 
   provisioner "file" {
-      source      = "/var/lib/jenkins/workspace/terraform_git/AWS_projecto/*"
-      destination = "/tmp/AWS_projecto/"
+      source      = "/var/lib/jenkins/workspace/terraform_git/AWS_projecto"
+      destination = "/tmp/AWS_projecto"
 
   }
 
