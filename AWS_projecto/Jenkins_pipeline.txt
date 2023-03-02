@@ -9,6 +9,7 @@ pipeline{
             steps{
                 git credentialsId: 'jenkins_example_private', url: 'https://github.com/srg6rt/DevOps_tasks_2023'
                 sh 'ls -la'
+                sh 'pwd'
                 
             }
         }
@@ -40,12 +41,15 @@ pipeline{
                     aws(credentialsId: 'jenkins-test-user', 
                     accessKeyVariable: 'AWS_ACCESS_KEY_ID', 
                     secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
-                sh 'terraform apply --auto-approve'
+                sh 'terraform apply -replace aws_instance.web-server-instance --auto-approve'
                     }
                 
             }
         }
         
+        
+        
+      
 
     }
     
