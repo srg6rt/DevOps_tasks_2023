@@ -130,7 +130,7 @@ resource "aws_instance" "web-server-instance" {
   }
 
 
-  user_datas  = <<-EOF
+  user_data  = <<-EOF
             #!/bin/bash
             sudo apt update -y
             sudo apt install apache2 -y
@@ -144,7 +144,9 @@ resource "aws_instance" "web-server-instance" {
             sudo bash -c 'echo "Test web page" > /var/www/html/index.html'
             
             EOF
+
   user_data_replace_on_change = true
+
   connection {
     type        = "ssh"
     user        = "admin"
