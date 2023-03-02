@@ -14,13 +14,24 @@ pipeline{
             }
         }
         
+                stage('Git Test') {
+            steps{
+                
+                sh '''SEC_K=\$(python3 -c \'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())\')
+                echo SECRET_KEY=\$SEC_K > /var/lib/jenkins/workspace/terraform_git/AWS_projecto/aussichtsturm/aussichtsturm/.env
+                cat /var/lib/jenkins/workspace/terraform_git/AWS_projecto/aussichtsturm/aussichtsturm/.env
+                python3 /var/lib/jenkins/workspace/terraform_git/AWS_projecto/aussichtsturm/manage.py test youtube_comments_grabber.tests.SimpleTest.test_status'''
+                
+            }
+        }
+      
 
         stage('Terraform Init') {
             steps{
                 sh 'terraform init'
             }
         }
-        
+
         stage('Terraform Plan') {
             steps{
                 
@@ -47,10 +58,6 @@ pipeline{
             }
         }
         
-        
-        
-      
-
     }
     
 }
