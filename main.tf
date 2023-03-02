@@ -130,7 +130,7 @@ resource "aws_instance" "web-server-instance" {
   }
 
 
-  user_data = <<-EOF
+  user_data_replace_on_change  = <<-EOF
             #!/bin/bash
             sudo apt update -y
             sudo apt install apache2 -y
