@@ -191,11 +191,6 @@ resource "aws_instance" "web-server-instance" {
                 "sudo chmod 775 /var/www/html/aussichtsturm/db.sqlite3",
                 "sudo chown :www-data -R /var/www/html/aussichtsturm/",
 
-                #"cd /var/www/html/aussichtsturm/",
-                #"sudo python3 manage.py collectstatic",
-                #"sudo cp -r static/* youtube_comments_grabber/static/",
-
-
                 "SEC_K=$(python3 -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())')",
                 "sudo echo SECRET_KEY=$SEC_K > /var/www/html/aussichtsturm/aussichtsturm/.env",
                 "sudo chmod -R 775 /var/www/html/aussichtsturm/",
