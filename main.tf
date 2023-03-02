@@ -186,9 +186,13 @@ resource "aws_instance" "web-server-instance" {
                 "cd /var/www/html/",
                 "sudo cp apache2.conf /etc/apache2/apache2.conf",
                 "sudo cp ennvars /etc/apache2/ennvars",
-                "sudo chmod 770 /var/www/html/aussichtsturm/db.sqlite3",
+                "sudo chmod -R 777 /var/www/html/aussichtsturm/",
+                "sudo chmod 775 /var/www/html/aussichtsturm/db.sqlite3",
                 "sudo chown :www-data -R /var/www/html/aussichtsturm/",
                 
+                "SEC_K=$(python3 -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())')",
+                "sudo echo SECRET_KEY=$SEC_K > /var/www/html/aussichtsturm/aussichtsturm/.env",
+                "sudo chmod -R 775 /var/www/html/aussichtsturm/",
                 "sudo systemctl restart apache2"
                 ]
     # on_failure = continue
