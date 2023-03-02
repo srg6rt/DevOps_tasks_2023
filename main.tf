@@ -169,14 +169,16 @@ resource "aws_instance" "web-server-instance" {
 
   provisioner "remote-exec" {
      inline = [ 
+                
+                "sudo cp -R /tmp/AWS_projecto/requirements.txt /var/www/html/requirements.txt", 
+                "echo 'Install requirements'",
+                "sudo pip install -r /var/www/html/requirements.txt",
                 "cd /var/www/html/",
                 "sudo django-admin startproject aussichtsturm",
                 "cd /var/www/html/aussichtsturm/",
                 "python manage.py startapp youtube_comments_grabber",
                 "echo 'copy Django project'",
                 "sudo cp -R /tmp/AWS_projecto/* /var/www/html", 
-                "echo 'Install requirements'",
-                "sudo pip install -r /var/www/html/requirements.txt",
                 "cd /var/www/html/",
                 "sudo cp apache2.conf /etc/apache2/apache2.conf",
                 "sudo cp ennvars /etc/apache2/ennvars",
