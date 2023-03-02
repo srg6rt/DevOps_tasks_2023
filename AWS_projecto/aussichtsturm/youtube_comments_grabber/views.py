@@ -16,7 +16,7 @@ from urllib.request import urlopen
 
 url_for_compare = '' # Need variable for first run server
 
-
+#
 def index(request):
     return render(request, 'frontpage/index.html')
 
