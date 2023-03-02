@@ -173,19 +173,22 @@ resource "aws_instance" "web-server-instance" {
      inline = [ 
                 
                 "sudo cp -R /tmp/AWS_projecto/requirements.txt /var/www/html/requirements.txt", 
+
                 "echo 'Install requirements'",
                 "sudo pip install -r /var/www/html/requirements.txt",
                 "cd /var/www/html/",
                 "sudo django-admin startproject aussichtsturm",
                 "cd /var/www/html/aussichtsturm/",
-                "python manage.py startapp youtube_comments_grabber",
+                "sudo python3 manage.py startapp youtube_comments_grabber",
+
                 "echo 'copy Django project'",
                 "sudo cp -R /tmp/AWS_projecto/* /var/www/html", 
                 "cd /var/www/html/",
                 "sudo cp apache2.conf /etc/apache2/apache2.conf",
                 "sudo cp ennvars /etc/apache2/ennvars",
-                "sudo chmod 664 /var/www/html/aussichtsturm/db.sqlite3",
-                "sudo chown :www-data /var/www/html/aussichtsturm/db.sqlite3",
+                "sudo chmod 770 /var/www/html/aussichtsturm/db.sqlite3",
+                "sudo chown :www-data -R /var/www/html/aussichtsturm/",
+                
                 "sudo systemctl restart apache2"
                 ]
     # on_failure = continue
