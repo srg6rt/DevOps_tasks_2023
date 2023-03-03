@@ -14,7 +14,7 @@ from django.views.generic import ListView
 import json
 from urllib.request import urlopen
 
-url_for_compare = '' # Need variable for first run server
+#url_for_compare = '' # Need variable for first run server
 
 
 def index(request):
